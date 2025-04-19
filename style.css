@@ -5,6 +5,30 @@ body {
     overflow: hidden;
 }
 
+/* 加载动画样式 */
+.loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 40, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    transition: opacity 0.5s ease;
+}
+
+.loader-inner {
+    width: 80px;
+    height: 80px;
+    border: 8px solid rgba(173, 216, 230, 0.3);
+    border-radius: 50%;
+    border-top-color: #add8e6;
+    animation: spin 1s linear infinite;
+}
+
 .background {
     position: fixed;
     top: 0;
@@ -48,6 +72,26 @@ body {
         font-size: 0.9em;
         margin: 0 10px;
     }
+    
+    .music-icon {
+        position: fixed;
+        top: 60px;
+        right: 20px;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(0, 0, 40, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        z-index: 100;
+        transition: transform 0.3s ease;
+    }
+    
+    .music-icon.playing {
+        animation: spin 2s linear infinite;
+    }
 }
 
 /* 内容居中 */
@@ -58,10 +102,18 @@ body {
     padding-bottom: 20vh;
     color: white;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.content.show {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .title {
-    font-size: 3rem;
+    font-size: 24px;
     font-family: 'Arial', sans-serif;
     line-height: 1.2;
     max-width: 100%;
@@ -72,6 +124,178 @@ body {
     margin: 2vh auto;
     max-width: 100%;
     line-height: 1.4;
+}
+
+/* 海底梦境文字样式 */
+.dream-text {
+    position: fixed;
+    bottom: 10%;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(50px);
+    animation: bubbleUp 8s ease-in-out infinite;
+}
+
+.dream-text p {
+    font-size: 1.5rem;
+    font-family: 'Arial', sans-serif;
+    color: #add8e6;
+    text-shadow: 0 0 10px rgba(173, 216, 230, 0.8), 0 0 20px rgba(135, 206, 250, 0.6);
+    background: linear-gradient(90deg, #add8e6, #87cefa, #add8e6);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes bubbleUp {
+    0% {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    20% {
+        opacity: 1;
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-100px);
+    }
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 0 0 10px rgba(173, 216, 230, 0.8), 0 0 20px rgba(135, 206, 250, 0.6);
+    }
+    to {
+        text-shadow: 0 0 15px rgba(173, 216, 230, 0.9), 0 0 25px rgba(135, 206, 250, 0.7), 0 0 30px rgba(135, 206, 250, 0.5);
+    }
+}
+
+/* 小船动画 - 从屏幕左侧(-100px)移动到右侧(200px) */
+.boat {
+    position: fixed;
+    left: -100px; /* 初始位置在屏幕左侧外 */
+    top: 80px;    /* 距离顶部80像素 */
+    font-size: 30px;
+    display: none; /* 默认隐藏 */
+    z-index: 100; /* 确保在顶层显示 */
+}
+
+/* 小船浮动动画 - 持续2秒，缓出效果 */
+.boat-animation {
+    animation: boatFloat 2s ease-out forwards;
+}
+
+/* 小船动画关键帧 */
+@keyframes boatFloat {
+    0% { transform: translateX(-100px); } /* 起始位置 */
+    100% { transform: translateX(200px); } /* 结束位置 */
+}
+
+/* 音乐列表容器样式 */
+.music-list-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 40, 0.9);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+}
+
+/* 返回按钮样式 */
+.back-button {
+    padding: 10px 20px;
+    background: linear-gradient(135deg, rgba(173, 216, 230, 0.8), rgba(135, 206, 250, 0.8));
+    border: 2px solid #add8e6;
+    border-radius: 30px;
+    color: #333;
+    font-size: 1em;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+}
+
+.back-button:hover {
+    background: linear-gradient(135deg, rgba(135, 206, 250, 0.8), rgba(173, 216, 230, 0.8));
+    transform: translateY(-3px);
+}
+
+/* 音乐列表样式 */
+.music-list {
+    width: 80%;
+    max-width: 500px;
+    height: 70vh;
+    overflow-y: auto;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+/* 歌曲项样式 */
+.song-item {
+    padding: 15px;
+    margin: 5px 0;
+    background: rgba(173, 216, 230, 0.2);
+    border-radius: 5px;
+    color: white;
+    font-size: 1.1em;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.song-item:hover {
+    background: rgba(173, 216, 230, 0.4);
+    transform: scale(1.02);
+}
+
+/* 章鱼按钮浮动动画关键帧 */
+@keyframes octopusFloat {
+    0% { transform: translateX(-100px); } /* 起始位置 */
+    80% { transform: translateX(100px); } /* 主要移动阶段 */
+    100% { transform: translateX(100px); } /* 最终停留位置 */
+}
+
+/* 章鱼之音按钮 - 海洋主题风格 */
+.octopus-sound-button {
+    position: fixed;
+    left: -100px;
+    top: 57px;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #ff00ff, #9400d3); /* 紫色渐变背景 */
+    color: white;
+    border: 4px solid #00ffff; /* 青色边框 */
+    border-radius: 30px;
+    cursor: pointer;
+    z-index: 100;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 0, 255, 0.7); /* 紫色阴影 */
+    display: none;
+    animation: octopusFloat 3s ease-out forwards;
+    font-weight: bold;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+/* 鼠标悬停效果 
+.octopus-sound-button:hover {
+    background: linear-gradient(135deg, #1E90FF, #4169E1); /* 深色渐变 *//*
+    transform: translateY(-5px) scale(1.1); /* 更明显的悬停效果 *//*
+    box-shadow: 0 8px 25px rgba(65, 105, 225, 0.9); /* 更强的阴影 */
+/*}*/
+
+
+.octopus-animation {
+    animation: boatFloat 2s ease-out forwards;
 }
 
 /* 导航按钮样式 */
@@ -85,6 +309,14 @@ body {
     padding: 10px 0;
     background: rgba(0, 0, 40, 0.7);
     z-index: 100;
+    opacity: 0;
+    transform: translateY(-50px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.nav-buttons.show {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .nav-button {
@@ -110,32 +342,89 @@ body {
 .music-control button {
     padding: 15px 25px;
     font-size: 1.5em;
-    background: rgb(0, 54, 202);
-    border: none;
+    background: rgba(255, 238, 110, 0.747);
+    border: 2px solid #ff8c00; /* 橙色边框 */
     border-radius: 25px;
-    color: rgba(207, 205, 255, 0.999);
+    color: rgba(82, 243, 208, 0.999);
     cursor: pointer;
     margin-top: 20px;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
-/* 手机竖屏适配 */
-@media (max-width: 768px) and (orientation: portrait) {
+.music-control button.show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* 底部版权信息 */
+.copyright {
+    position: fixed;
+    bottom: 5px;
+    left: 0;
+    width: 100%;
+    color: white;
+    font-size: 6px;
+    text-align: center;
+    line-height: 1;
+    opacity: 0.7;
+    z-index: 100;
+}
+
+/* 手机竖屏适配 - 针对屏幕宽度小于768px且竖屏比例的设备 */
+@media (max-width: 768px) and (max-aspect-ratio: 1/1) {
+    /* 标题字体大小调整为3.5rem，确保在手机上清晰可见 */
     .title {
-        font-size: 3.5rem;
+        font-size: 2rem;
     }
     
+    /* 正文字体大小调整为2.5rem，提高可读性 */
     .text {
-        font-size: 2.5rem;
+        font-size: 1rem;
     }
     
+    /* 音乐播放按钮样式，保持原有大小 */
     .music-control button {
-        padding: 20px 30px;
-        font-size: 2em;
+        padding: 10px 18px;
+        font-size: 1em;
     }
     
+    .music-icon {
+        position: fixed;
+        top: 60px;
+        right: 20px;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(0, 0, 40, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        z-index: 100;
+        transition: transform 0.3s ease;
+    }
+    
+    .music-icon.playing {
+        animation: spin 2s linear infinite;
+    }
+    
+    @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+    
+    /* 导航栏容器样式，减小上下内边距从15px到12px */
+    .nav-buttons {
+        padding: 6px 0; /* 减小内边距 */
+        background: rgba(0, 0, 40, 0.8); /* 半透明深蓝色背景 */
+    }
+    
+    /* 导航按钮样式，减小尺寸 */
     .nav-button {
-        padding: 25px 35px;
-        font-size: 1.8em;
-        margin: 0 5px;
+        padding: 6px 8px; /* 减小内边距 */
+        font-size: 0.7em; /* 减小字体大小 */
+        margin: 0 10px; /* 保持左右外边距 */
     }
 }

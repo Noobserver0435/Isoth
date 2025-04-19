@@ -2,14 +2,20 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Isoth</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mommy and the Queen: Isoth</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- 加载动画 -->
+    <div class="loader">
+        <div class="loader-inner"></div>
+    </div>
+    
     <!-- 导航按钮 -->
     <div class="nav-buttons">
-        <a href="https://live.bilibili.com/1742801661/?live_from=86001" class="nav-button">我的主场</a>
-        <a href="https://space.bilibili.com/3546723064482658" class="nav-button">我的领地</a>
+        <a href="https://live.bilibili.com/1742801661/?live_from=86001" class="nav-button">出没海域</a>
+        <a href="https://space.bilibili.com/3546723064482658" class="nav-button">章鱼保护区</a>
         <a href="https://pome.vip/ISOTH910" class="nav-button">声波沁泡/投稿通道</a>
     </div>
 
@@ -18,8 +24,9 @@
 
     <!-- 内容容器 -->
     <div class="content">
-        <h1 class="title">触腕缠绕的第100夜·伊索斯百日回</h1>
-        <p class="text">玻璃缸底中的10000颗珍珠</p>
+        <h1 class="title">触腕缠绕的第101夜 <br>伊索斯百日回</h1>
+        
+        <p class="text">欢迎玻璃缸底中的10000颗珍珠</p>
         
         <!-- 音乐播放器 -->
         <div class="music-control">
@@ -27,26 +34,101 @@
                 <source src="music.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放
             </audio>
-            <button onclick="toggleMusic()">🎵 播放/暂停</button>
+            <button onclick="toggleMusic()" class="music-icon">🎵</button>
+            <div id="boat" class="boat">⛵</div>
+            <button id="octopusSound" class="octopus-sound-button" style="display:none;">梦之乐章</button>
         </div>
+    </div>
+    
+    <!-- 海底梦境文字 -->
+    <div class="dream-text">
+        <p>盘旋于梦境不愿离去的触须，紧紧地缠绕于访客脖颈的梦境之主，并不打算让客人安然而归...</p>
     </div>
 
     <script>
+        // 页面加载完成后隐藏加载动画
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.querySelector('.loader').style.opacity = '0';
+                setTimeout(function() {
+                    document.querySelector('.loader').style.display = 'none';
+                    
+                    // 显示内容区域动画
+                    document.querySelector('.content').classList.add('show');
+                    document.querySelector('.nav-buttons').classList.add('show');
+                    document.querySelector('.music-control button').classList.add('show');
+                }, 500);
+            }, 1000);
+        });
+        
         // 控制音乐播放
         function toggleMusic() {
             const audio = document.getElementById("bgm");
+            const musicIcon = document.querySelector('.music-icon');
             if (audio.paused) {
                 audio.play();
+                musicIcon.classList.add('playing');
+                
+                // 每次播放时显示小船和按钮
+                const boat = document.getElementById('boat');
+                const octopusSoundBtn = document.getElementById('octopusSound');
+                boat.style.display = 'block';
+                boat.classList.add('boat-animation');
+                setTimeout(() => {
+                    octopusSoundBtn.style.display = 'block';
+                    octopusSoundBtn.classList.add('show');
+                }, 500);
             } else {
                 audio.pause();
+                musicIcon.classList.remove('playing');
             }
         }
+        
+        // 点击章鱼之音按钮
+        document.getElementById('octopusSound').addEventListener('click', function() {
+            document.querySelector('.content').style.display = 'none';
+            document.querySelector('.dream-text').style.display = 'none';
+            
+            // 创建音乐列表容器
+            const musicListContainer = document.createElement('div');
+            musicListContainer.className = 'music-list-container';
+            
+            // 添加返回按钮
+            const backButton = document.createElement('button');
+            backButton.className = 'back-button';
+            backButton.textContent = '返回';
+            backButton.addEventListener('click', function() {
+                document.querySelector('.content').style.display = 'block';
+                document.querySelector('.dream-text').style.display = 'block';
+                musicListContainer.remove();
+            });
+            
+            // 添加音乐列表
+            const musicList = document.createElement('div');
+            musicList.className = 'music-list';
+            
+            const songs = ['撒野', '棠梨煎雪', '舞女泪', '漂洋过海来看你', '大家一起喜洋洋', '易燃易爆炸', '好运来', '我是你的小狗', '爱的回归线', '故梦', '人是＿', '味道', '达拉崩吧', '漠河舞厅', '闰猹抄', '琴师', '繁华唱遍', '我的一个道姑朋友', '君临天下', '生如逆旅', '白羊', '红豆', '遇见', '体面', '大氿歌', '讲真的', '红玫瑰', '南山南', '当你老了', '我要你', '说散就散', '别找我麻烦', '奇妙能力歌', '光年之外', '来自天堂的魔鬼', '至少还有你', '没那么简单', '母系社会', '有形的翅膀', '隐形的翅膀', '淋雨一直走', 'Fly me to the moon', 'Dance Monkey', 'Let it go', 'Show Yourself', 'Young And Beautiful', 'Close to you', 'Black Bheep', 'Bad Guy', 'whataya want from me'];
+            
+            songs.forEach(song => {
+                const songItem = document.createElement('div');
+                songItem.className = 'song-item';
+                songItem.textContent = song;
+                musicList.appendChild(songItem);
+            });
+            
+            musicListContainer.appendChild(backButton);
+            musicListContainer.appendChild(musicList);
+            document.body.appendChild(musicListContainer);
+        });
 
         // 动态调整字体大小
         function adjustFontSize() {
             const background = document.querySelector('.background');
             const title = document.querySelector('.title');
             const text = document.querySelector('.text');
+            const musicBtn = document.querySelector('.music-control button');
+            const navButtons = document.querySelectorAll('.nav-button');
+            const navContainer = document.querySelector('.nav-buttons');
             
             // 仅针对电脑端横屏(宽度>=1024px)
             if (window.innerWidth >= 1024) {
@@ -56,11 +138,25 @@
                 
                 // 根据背景图片比例调整字体大小
                 if (ratio > 1.5) {
-                    title.style.fontSize = '20px';
-                    text.style.fontSize = '14px';
+                    title.style.fontSize = '22x';
+                    text.style.fontSize = '17px';
+                    musicBtn.style.fontSize = '0.8em';
+                    musicBtn.style.padding = '8px 16px';
+                    navButtons.forEach(btn => {
+                        btn.style.fontSize = '0.9em';
+                        btn.style.padding = '9px 11px';
+                    });
+                    navContainer.style.padding = '7px 0';
                 } else if (ratio > 1.2) {
-                    title.style.fontSize = '22px';
-                    text.style.fontSize = '15px';
+                    title.style.fontSize = '24px';
+                    text.style.fontSize = '18px';
+                    musicBtn.style.fontSize = '0.9em';
+                    musicBtn.style.padding = '10px 18px';
+                    navButtons.forEach(btn => {
+                        btn.style.fontSize = '1em';
+                        btn.style.padding = '11px 15px';
+                    });
+                    navContainer.style.padding = '9px 0';
                 }
             }
         }
@@ -69,5 +165,12 @@
         window.addEventListener('load', adjustFontSize);
         window.addEventListener('resize', adjustFontSize);
     </script>
+    
+    <!-- 版权信息 -->
+    <div class="copyright">
+        最终解释权归Isoth所有<br>
+        感谢钓钓的大力支持<br>
+        Mr.M
+    </div>
 </body>
 </html>
