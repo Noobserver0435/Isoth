@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Isoth</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 导航按钮 -->
+    <div class="nav-buttons">
+        <a href="https://live.bilibili.com/1742801661/?live_from=86001" class="nav-button">我的主场</a>
+        <a href="https://space.bilibili.com/3546723064482658" class="nav-button">我的领地</a>
+        <a href="https://pome.vip/ISOTH910" class="nav-button">声波沁泡/投稿通道</a>
+    </div>
+
+    <!-- 背景图片 -->
+    <div class="background"></div>
+
+    <!-- 内容容器 -->
+    <div class="content">
+        <h1 class="title">触腕缠绕的第100夜·伊索斯百日回</h1>
+        <p class="text">玻璃缸底中的10000颗珍珠</p>
+        
+        <!-- 音乐播放器 -->
+        <div class="music-control">
+            <audio id="bgm" loop>
+                <source src="music.mp3" type="audio/mpeg">
+                您的浏览器不支持音频播放
+            </audio>
+            <button onclick="toggleMusic()">🎵 播放/暂停</button>
+        </div>
+    </div>
+
+    <script>
+        // 控制音乐播放
+        function toggleMusic() {
+            const audio = document.getElementById("bgm");
+            if (audio.paused) {
+                audio.play();
+            } else {
+                audio.pause();
+            }
+        }
+
+        // 动态调整字体大小
+        function adjustFontSize() {
+            const background = document.querySelector('.background');
+            const title = document.querySelector('.title');
+            const text = document.querySelector('.text');
+            
+            // 仅针对电脑端横屏(宽度>=1024px)
+            if (window.innerWidth >= 1024) {
+                const bgWidth = background.offsetWidth;
+                const bgHeight = background.offsetHeight;
+                const ratio = bgWidth / bgHeight;
+                
+                // 根据背景图片比例调整字体大小
+                if (ratio > 1.5) {
+                    title.style.fontSize = '20px';
+                    text.style.fontSize = '14px';
+                } else if (ratio > 1.2) {
+                    title.style.fontSize = '22px';
+                    text.style.fontSize = '15px';
+                }
+            }
+        }
+        
+        // 页面加载和窗口大小变化时执行
+        window.addEventListener('load', adjustFontSize);
+        window.addEventListener('resize', adjustFontSize);
+    </script>
+</body>
+</html>

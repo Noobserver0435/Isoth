@@ -1,0 +1,141 @@
+/* 背景图片全屏覆盖 */
+body {
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('bg.jpg') no-repeat center center;
+    background-size: cover;
+    filter: brightness(0.7); /* 降低背景亮度，提高文字可读性 */
+    z-index: -1;
+}
+
+/* 电脑端适配 */
+@media (min-width: 1024px) {
+    .background {
+        background-size: contain;
+        background-color: rgba(0,0,0,0.8);
+    }
+    
+    .content {
+        padding-top: 5vh;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+    
+    .title {
+        font-size: 24px;
+        line-height: 1.2;
+        margin-bottom: 2vh;
+        max-width: 80%;
+    }
+    
+    .text {
+        font-size: 16px;
+        line-height: 1.4;
+        max-width: 80%;
+    }
+    
+    .nav-button {
+        padding: 6px 12px;
+        font-size: 0.9em;
+        margin: 0 10px;
+    }
+}
+
+/* 内容居中 */
+.content {
+    position: relative;
+    text-align: center;
+    padding-top: 20vh;
+    padding-bottom: 20vh;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+}
+
+.title {
+    font-size: 3rem;
+    font-family: 'Arial', sans-serif;
+    line-height: 1.2;
+    max-width: 100%;
+}
+
+.text {
+    font-size: 2rem;
+    margin: 2vh auto;
+    max-width: 100%;
+    line-height: 1.4;
+}
+
+/* 导航按钮样式 */
+.nav-buttons {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+    background: rgba(0, 0, 40, 0.7);
+    z-index: 100;
+}
+
+.nav-button {
+    padding: 12px 24px;
+    margin: 0;
+    font-size: 1.2em;
+    background: linear-gradient(135deg, rgba(173, 216, 230, 0.8), rgba(135, 206, 250, 0.8));
+    border: 2px solid #add8e6;
+    border-radius: 30px;
+    color: #333;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(173, 216, 230, 0.5);
+}
+
+.nav-button:hover {
+    background: linear-gradient(135deg, rgba(135, 206, 250, 0.8), rgba(173, 216, 230, 0.8));
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(135, 206, 250, 0.7);
+}
+
+/* 音乐按钮样式 */
+.music-control button {
+    padding: 15px 25px;
+    font-size: 1.5em;
+    background: rgb(0, 54, 202);
+    border: none;
+    border-radius: 25px;
+    color: rgba(207, 205, 255, 0.999);
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+/* 手机竖屏适配 */
+@media (max-width: 768px) and (orientation: portrait) {
+    .title {
+        font-size: 3.5rem;
+    }
+    
+    .text {
+        font-size: 2.5rem;
+    }
+    
+    .music-control button {
+        padding: 20px 30px;
+        font-size: 2em;
+    }
+    
+    .nav-button {
+        padding: 25px 35px;
+        font-size: 1.8em;
+        margin: 0 5px;
+    }
+}
