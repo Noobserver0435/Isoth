@@ -90,7 +90,12 @@ body {
     }
     
     .music-icon.playing {
-        animation: spin 2s linear infinite;
+        animation: spin 2s linear infinite, breathe 1.5s ease-in-out infinite;
+    }
+    
+    @keyframes breathe {
+        0%, 100% { transform: scale(1) rotate(0deg); }
+        50% { transform: scale(1.1) rotate(0deg); }
     }
 }
 
@@ -524,15 +529,17 @@ body {
 .music-control button {
     padding: 15px 25px;
     font-size: 1.5em;
-    background: rgba(255, 238, 110, 0.747);
-    border: 2px solid #ff8c00; /* 橙色边框 */
+    background: linear-gradient(135deg, rgba(30, 144, 255, 0.8), rgba(138, 43, 226, 0.8));
+    border: 2px solid #00ffff;
     border-radius: 25px;
-    color: rgba(82, 243, 208, 0.999);
+    color: white;
     cursor: pointer;
     margin-top: 20px;
     opacity: 0;
     transform: scale(0.8);
-    transition: opacity 0.8s ease, transform 0.8s ease;
+    transition: all 0.8s ease;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.7);
+    animation: pulse 2s infinite;
 }
 
 .music-control button.show {
@@ -570,6 +577,10 @@ body {
     .music-control button {
         padding: 10px 18px;
         font-size: 1em;
+        background: linear-gradient(135deg, rgba(30, 144, 255, 0.8), rgba(138, 43, 226, 0.8));
+        border: 2px solid #00ffff;
+        box-shadow: 0 0 10px rgba(0, 255, 255, 0.7);
+        animation: pulse 2s infinite;
     }
     
     .music-icon {
@@ -595,7 +606,12 @@ body {
     }
     
     .music-icon.playing {
-        animation: spin 2s linear infinite;
+        animation: spin 2s linear infinite, breathe 1.5s ease-in-out infinite;
+    }
+    
+    @keyframes breathe {
+        0%, 100% { transform: scale(1) rotate(0deg); }
+        50% { transform: scale(1.1) rotate(0deg); }
     }
     
     @keyframes spin {
