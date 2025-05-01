@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mommy and the Queen: Isoth</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="head-Photoroom.png">
+    <link rel="stylesheet" href="style.css?v=1.1.17">
 </head>
 <body>
     <!-- 加载动画 -->
@@ -21,17 +22,41 @@
 
     <!-- 背景图片 -->
     <div class="background"></div>
+    
+    <!-- 相册按钮 -->
+    <button id="albumButton" class="album-button">纪念照</button>
+    
+    <!-- 相册弹窗 -->
+    <div id="albumModal" class="album-modal">
+        <div class="album-content">
+            <span class="close-album">&times;</span>
+            <img src="mommy10000.webp" alt="Mommy 10000" class="album-image">
+            <p class="album-caption">据传言，章鱼曾表示，这张图出来的有点太晚了....</p>
+        </div>
+    </div>
 
     <!-- 内容容器 -->
     <div class="content">
         <h1 class="title">触腕缠绕的第101夜 <br>伊索斯百日回</h1>
         
         <p class="text">欢迎玻璃缸底中的10000颗珍珠</p>
+        <div class="celebration-text" onclick="showConfetti()">庆贺圆满结束!<!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Document</title>
+        </head>
+        <body>
+            
+        </body>
+        </html></div>
+        <button id="jumpButton" class="jump-button" style="display:none;">【回放】百日·纪念与起点</button>
         
         <!-- 音乐播放器 -->
         <div class="music-control">
             <audio id="bgm" loop>
-                <source src="music.mp3" type="audio/mpeg">
+                <source src="Havana.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放
             </audio>
             <button onclick="toggleMusic()" class="music-icon">🎵</button>
@@ -57,6 +82,8 @@
                     document.querySelector('.content').classList.add('show');
                     document.querySelector('.nav-buttons').classList.add('show');
                     document.querySelector('.music-control button').classList.add('show');
+                    document.querySelector('.album-button').classList.add('show');
+                    document.querySelector('.album-button').style.opacity = '1';
                 }, 500);
             }, 1000);
         });
@@ -68,7 +95,7 @@
             if (audio.paused) {
                 audio.play();
                 musicIcon.classList.add('playing');
-                
+                /*
                 // 每次播放时显示小船和按钮
                 const boat = document.getElementById('boat');
                 const octopusSoundBtn = document.getElementById('octopusSound');
@@ -78,6 +105,7 @@
                     octopusSoundBtn.style.display = 'block';
                     octopusSoundBtn.classList.add('show');
                 }, 500);
+                */
             } else {
                 audio.pause();
                 musicIcon.classList.remove('playing');
@@ -121,12 +149,73 @@
             document.body.appendChild(musicListContainer);
         });
 
+        // 显示彩带效果
+        function showConfetti() {
+            // 创建左右两侧彩带容器
+            const leftConfetti = document.createElement('div');
+            leftConfetti.className = 'confetti left';
+            const rightConfetti = document.createElement('div');
+            rightConfetti.className = 'confetti right';
+            
+            // 添加彩带元素
+            for (let i = 0; i < 50; i++) {
+                const piece = document.createElement('div');
+                piece.className = 'confetti-piece';
+                piece.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                piece.style.left = `${Math.random() * 100}%`;
+                piece.style.animationDuration = `${1 + Math.random() * 3}s`;
+                piece.style.animationDelay = `${Math.random() * 2}s`;
+                
+                if (i % 2 === 0) {
+                    leftConfetti.appendChild(piece.cloneNode());
+                } else {
+                    rightConfetti.appendChild(piece.cloneNode());
+                }
+            }
+            
+            // 添加到页面
+            document.body.appendChild(leftConfetti);
+            document.body.appendChild(rightConfetti);
+            
+            // 显示跳转按钮
+            const jumpButton = document.getElementById('jumpButton');
+            jumpButton.style.display = 'block';
+            
+            // 添加点击事件
+            jumpButton.addEventListener('click', function() {
+                window.location.href = 'https://www.bilibili.com/video/BV1o2LPzhExH/?share_source=copy_web&vd_source=031507135b1f928c001a59f0c9138bf2';
+            });
+            
+            // 3秒后移除彩带
+            setTimeout(() => {
+                leftConfetti.remove();
+                rightConfetti.remove();
+            }, 3000);
+        }
+        
+        // 相册按钮交互逻辑
+        document.getElementById('albumButton').addEventListener('click', function() {
+            document.getElementById('albumModal').style.display = 'block';
+        });
+        
+        document.querySelector('.close-album').addEventListener('click', function() {
+            document.getElementById('albumModal').style.display = 'none';
+        });
+        
+        // 点击弹窗外部关闭相册
+        window.addEventListener('click', function(event) {
+            if (event.target === document.getElementById('albumModal')) {
+                document.getElementById('albumModal').style.display = 'none';
+            }
+        });
+        
         // 动态调整字体大小
         function adjustFontSize() {
             const background = document.querySelector('.background');
             const title = document.querySelector('.title');
             const text = document.querySelector('.text');
-            const musicBtn = document.querySelector('.music-control button');
+            const musicBtn = document.querySelector('.music-icon');
+            const albumBtn = document.querySelector('.album-button');
             const navButtons = document.querySelectorAll('.nav-button');
             const navContainer = document.querySelector('.nav-buttons');
             
@@ -140,8 +229,8 @@
                 if (ratio > 1.5) {
                     title.style.fontSize = '22x';
                     text.style.fontSize = '17px';
-                    musicBtn.style.fontSize = '0.8em';
-                    musicBtn.style.padding = '8px 16px';
+                    musicBtn.style.fontSize = albumBtn.style.fontSize = '0.8em';
+                    musicBtn.style.padding = albumBtn.style.padding = '8px 16px';
                     navButtons.forEach(btn => {
                         btn.style.fontSize = '0.9em';
                         btn.style.padding = '9px 11px';
@@ -150,8 +239,8 @@
                 } else if (ratio > 1.2) {
                     title.style.fontSize = '24px';
                     text.style.fontSize = '18px';
-                    musicBtn.style.fontSize = '0.9em';
-                    musicBtn.style.padding = '10px 18px';
+                    musicBtn.style.fontSize = albumBtn.style.fontSize = '0.9em';
+                    musicBtn.style.padding = albumBtn.style.padding = '10px 18px';
                     navButtons.forEach(btn => {
                         btn.style.fontSize = '1em';
                         btn.style.padding = '11px 15px';

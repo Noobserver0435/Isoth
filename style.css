@@ -45,7 +45,7 @@ body {
 @media (min-width: 1024px) {
     .background {
         background-size: contain;
-        background-color: rgba(0,0,0,0.8);
+        background-color: rgba(0, 81, 255, 0.664);
     }
     
     .content {
@@ -126,6 +126,86 @@ body {
     line-height: 1.4;
 }
 
+/* 相册按钮样式 */
+.album-button {
+    position: fixed;
+    top: 60px;
+    left: 20px;
+    padding: 8px 16px;
+    background: rgba(0, 0, 40, 0.8);
+    color: white;
+    border: 1px solid #add8e6;
+    border-radius: 20px;
+    cursor: pointer;
+    z-index: 100;
+    transition: all 0.3s ease;
+    font-size: 16px;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.album-button:hover {
+    background: rgba(173, 216, 230, 0.8);
+    color: #000;
+    transform: scale(1.05);
+}
+
+.album-button.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 相册弹窗样式 */
+.album-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 200;
+}
+
+.album-content {
+    position: relative;
+    width: 80%;
+    max-width: 800px;
+    margin: 5% auto;
+    padding: 20px;
+    background: rgba(0, 0, 40, 0.9);
+    border: 2px solid #add8e6;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(173, 216, 230, 0.6);
+}
+
+.close-album {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    color: #add8e6;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-album:hover {
+    color: white;
+}
+
+.album-image {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+.album-caption {
+    margin-top: 10px;
+    font-size: 12px;
+    color: #add8e6;
+    text-align: center;
+}
+
 /* 海底梦境文字样式 */
 .dream-text {
     position: fixed;
@@ -136,6 +216,7 @@ body {
     opacity: 0;
     transform: translateY(50px);
     animation: bubbleUp 8s ease-in-out infinite;
+    animation-delay: 2s; /* 延迟2秒开始动画，等待加载完成 */
 }
 
 .dream-text p {
@@ -173,6 +254,107 @@ body {
     }
     to {
         text-shadow: 0 0 15px rgba(173, 216, 230, 0.9), 0 0 25px rgba(135, 206, 250, 0.7), 0 0 30px rgba(135, 206, 250, 0.5);
+    }
+}
+
+/* 庆祝文字样式 */
+.celebration-text {
+    color: white;
+    font-size: 1.5rem;
+    margin: 2vh auto;
+    cursor: pointer;
+    text-shadow: 0 0 10px rgba(255,255,255,0.8);
+    position: relative;
+    padding: 10px 20px;
+    display: inline-block;
+}
+
+.celebration-text::before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    border: 1px solid rgba(255,255,255,0.5);
+    border-radius: 5px;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 0.7; }
+    50% { transform: scale(1.05); opacity: 1; }
+    100% { transform: scale(1); opacity: 0.7; }
+}
+
+
+/* 流动文字动画 */
+@keyframes flow {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+}
+
+/* 跳转按钮样式 */
+.jump-button {
+    display: block;
+    margin: 1rem auto;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, rgba(30, 144, 255, 0.4), rgba(0, 191, 255, 0.4));
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(30, 144, 255, 0.2);
+    height: auto;
+    min-height: 48px;
+}
+
+.jump-button:hover {
+    background: linear-gradient(135deg, rgba(0, 191, 255, 0.6), rgba(30, 144, 255, 0.6));
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(30, 144, 255, 0.4);
+}
+
+/* 彩带容器样式 */
+.confetti {
+    position: fixed;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 200;
+}
+
+.confetti.left {
+    left: 0;
+}
+
+.confetti.right {
+    right: 0;
+}
+
+/* 彩带碎片样式 */
+.confetti-piece {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    opacity: 0;
+    animation: confetti-fall 4s ease-in forwards;
+}
+
+@keyframes confetti-fall {
+    0% {
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 1;
+    }
+    70% {
+        opacity: 1; /* 保持可见 */
+    }
+    100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
     }
 }
 
@@ -403,7 +585,13 @@ body {
         align-items: center;
         cursor: pointer;
         z-index: 100;
-        transition: transform 0.3s ease;
+        transition: all 0.3s ease;
+    }
+    
+    .music-icon:hover {
+        background: rgba(173, 216, 230, 0.8);
+        color: #000;
+        transform: scale(1.05);
     }
     
     .music-icon.playing {
