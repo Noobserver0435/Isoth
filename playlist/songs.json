@@ -1,0 +1,316 @@
+{
+  "playlist": {
+    "name": "梦之乐章",
+    "description": "盘旋于梦境的触须，为你吟唱",
+    "totalSongs": 51,
+    "lastUpdated": "2026-04"
+  },
+  "songs": [
+    {
+      "id": 1,
+      "name": "撒野",
+      "language": "中文",
+      "category": "流行"
+    },
+    {
+      "id": 2,
+      "name": "棠梨煎雪",
+      "language": "中文",
+      "category": "古风"
+    },
+    {
+      "id": 3,
+      "name": "舞女泪",
+      "language": "中文",
+      "category": "经典"
+    },
+    {
+      "id": 4,
+      "name": "漂洋过海来看你",
+      "language": "中文",
+      "category": "流行"
+    },
+    {
+      "id": 5,
+      "name": "大家一起喜洋洋",
+      "language": "中文",
+      "category": "动画"
+    },
+    {
+      "id": 6,
+      "name": "易燃易爆炸",
+      "language": "中文",
+      "category": "流行"
+    },
+    {
+      "id": 7,
+      "name": "好运来",
+      "language": "中文",
+      "category": "经典"
+    },
+    {
+      "id": 8,
+      "name": "我是你的小狗",
+      "language": "中文",
+      "category": "流行"
+    },
+    {
+      "id": 9,
+      "name": "爱的回归线",
+      "language": "中文",
+      "category": "流行"
+    },
+    {
+      "id": 10,
+      "name": "故梦",
+      "language": "中文",
+      "category": "古风"
+    },
+    {
+      "id": 11,
+      "name": "人是_",
+      "language": "中文",
+      "category": "流行"
+    },
+    {
+      "id": 12,
+      "name": "味道",
+      "language": "中文",
+      "category": "经典"
+    },
+    {
+      "id": 13,
+      "name": "达拉崩吧",
+      "language": "中文",
+      "category": "二次元"
+    },
+    {
+      "id": 14,
+      "name": "漠河舞厅",
+      "language": "中文",
+      "category": "流行"
+    },
+    {
+      "id": 15,
+      "name": "闰猹抄",
+      "language": "中文",
+      "category": "古风"
+    },
+    {
+      "id": 16,
+      "name": "琴师",
+      "language": "中文",
+      "category": "古风"
+    },
+    {
+      "id": 17,
+      "name": "繁华唱遍",
+      "language": "中文",
+      "category": "古风"
+    },
+    {
+      "id": 18,
+      "name": "我的一个道姑朋友",
+      "language": "中文",
+      "category": "古风"
+    },
+    {
+      "id": 19,
+      "name": "君临天下",
+      "language": "中文",
+      "category": "古风"
+    },
+    {
+      "id": 20,
+      "name": "生如逆旅",
+      "language": "中文",
+      "category": "古风"
+    },
+    {
+      "id": 21,
+      "name": "白羊",
+      "language": "中文",
+      "category": "流行"
+    },
+    {
+      "id": 22,
+      "name": "红豆",
+      "language": "中文",
+      "category": "经典"
+    },
+    {
+      "id": 23,
+      "name": "遇见",
+      "language": "中文",
+      "category": "经典"
+    },
+    {
+      "id": 24,
+      "name": "体面",
+      "language": "中文",
+      "category": "流行"
+    },
+    {
+      "id": 25,
+      "name": "大氿歌",
+      "language": "中文",
+      "category": "古风"
+    },
+    {
+      "id": 26,
+      "name": "讲真的",
+      "language": "中文",
+      "category": "流行"
+    },
+    {
+      "id": 27,
+      "name": "红玫瑰",
+      "language": "中文",
+      "category": "经典"
+    },
+    {
+      "id": 28,
+      "name": "南山南",
+      "language": "中文",
+      "category": "民谣"
+    },
+    {
+      "id": 29,
+      "name": "当你老了",
+      "language": "中文",
+      "category": "民谣"
+    },
+    {
+      "id": 30,
+      "name": "我要你",
+      "language": "中文",
+      "category": "民谣"
+    },
+    {
+      "id": 31,
+      "name": "说散就散",
+      "language": "中文",
+      "category": "流行"
+    },
+    {
+      "id": 32,
+      "name": "别找我麻烦",
+      "language": "中文",
+      "category": "流行"
+    },
+    {
+      "id": 33,
+      "name": "奇妙能力歌",
+      "language": "中文",
+      "category": "民谣"
+    },
+    {
+      "id": 34,
+      "name": "光年之外",
+      "language": "中文",
+      "category": "流行"
+    },
+    {
+      "id": 35,
+      "name": "来自天堂的魔鬼",
+      "language": "中文",
+      "category": "流行"
+    },
+    {
+      "id": 36,
+      "name": "至少还有你",
+      "language": "中文",
+      "category": "经典"
+    },
+    {
+      "id": 37,
+      "name": "没那么简单",
+      "language": "中文",
+      "category": "经典"
+    },
+    {
+      "id": 38,
+      "name": "母系社会",
+      "language": "中文",
+      "category": "流行"
+    },
+    {
+      "id": 39,
+      "name": "有形的翅膀",
+      "language": "中文",
+      "category": "流行"
+    },
+    {
+      "id": 40,
+      "name": "隐形的翅膀",
+      "language": "中文",
+      "category": "经典"
+    },
+    {
+      "id": 41,
+      "name": "淋雨一直走",
+      "language": "中文",
+      "category": "流行"
+    },
+    {
+      "id": 42,
+      "name": "巴拉莱卡",
+      "language": "中文",
+      "category": "流行"
+    },
+    {
+      "id": 43,
+      "name": "Fly me to the moon",
+      "language": "英文",
+      "category": "爵士"
+    },
+    {
+      "id": 44,
+      "name": "Dance Monkey",
+      "language": "英文",
+      "category": "流行"
+    },
+    {
+      "id": 45,
+      "name": "Let it go",
+      "language": "英文",
+      "category": "动画"
+    },
+    {
+      "id": 46,
+      "name": "Show Yourself",
+      "language": "英文",
+      "category": "动画"
+    },
+    {
+      "id": 47,
+      "name": "Young And Beautiful",
+      "language": "英文",
+      "category": "流行"
+    },
+    {
+      "id": 48,
+      "name": "Close to you",
+      "language": "英文",
+      "category": "经典"
+    },
+    {
+      "id": 49,
+      "name": "Black Sheep",
+      "language": "英文",
+      "category": "流行"
+    },
+    {
+      "id": 50,
+      "name": "Bad Guy",
+      "language": "英文",
+      "category": "流行"
+    },
+    {
+      "id": 51,
+      "name": "whataya want from me",
+      "language": "英文",
+      "category": "摇滚"
+    }
+  ]
+}

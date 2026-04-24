@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>梦之乐章 | 伊索斯歌单</title>
+    <meta name="description" content="盘旋于梦境的触须，为你吟唱">
+    <link rel="icon" href="../head-Photoroom.png">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 加载动画 -->
+    <div class="loader">
+        <div class="loader-inner"></div>
+    </div>
+
+    <!-- 背景 -->
+    <div class="background"></div>
+
+    <!-- 返回按钮 -->
+    <a href="../" class="back-button">← 返回</a>
+
+    <!-- 主内容区 -->
+    <div class="container">
+        <h1 class="title">梦之乐章</h1>
+        <p class="subtitle">盘旋于梦境的触须，为你吟唱</p>
+
+        <!-- 抽取区域 -->
+        <div class="wheel-section">
+            <!-- 分类选择 -->
+            <div class="category-selector">
+                <button class="category-btn active" data-category="all">全部</button>
+                <button class="category-btn" data-category="中文">中文</button>
+                <button class="category-btn" data-category="英文">英文</button>
+            </div>
+            
+            <!-- 滚动抽取机 -->
+            <div class="slot-machine">
+                <div class="slot-window">
+                    <div class="slot-songs" id="slotSongs">
+                        <!-- 歌曲滚动列表由JS生成 -->
+                    </div>
+                    <div class="slot-highlight"></div>
+                </div>
+                <div class="slot-decoration top">✦</div>
+                <div class="slot-decoration bottom">✦</div>
+            </div>
+            
+            <button class="spin-button" id="spinButton">开始抽取</button>
+            <div class="result-display" id="resultDisplay"></div>
+        </div>
+
+        <!-- 歌单列表 -->
+        <div class="playlist-section">
+            <h2 class="section-title">歌单列表</h2>
+            <div class="search-box">
+                <input type="text" class="search-input" id="searchInput" placeholder="搜索歌曲...">
+                <span class="search-icon">🔍</span>
+            </div>
+            <div class="song-list" id="songList"></div>
+            <div class="no-result" id="noResult" style="display: none;">未找到匹配的歌曲</div>
+        </div>
+    </div>
+
+    <!-- 版权信息 -->
+    <div class="copyright">
+        <div class="copyright-main">
+            © 2025-2026 Isoth · 最终解释权归伊索斯isoth所有
+        </div>
+        <div class="copyright-icp">
+            <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">鄂ICP备2026018261号</a>
+        </div>
+    </div>
+
+    <script>
+        // 歌单数据
+        let allSongs = [];
+        let currentSongs = [];
+        let playlistInfo = {};
+        let lastSelectedSong = null;
+        let currentCategory = 'all';
+
+        // 从 JSON 文件加载歌单数据
+        async function loadSongs() {
+            try {
+                const response = await fetch('songs.json');
+                const data = await response.json();
+                allSongs = data.songs;
+                currentSongs = [...allSongs];
+                playlistInfo = data.playlist;
+                renderWheel();
+                renderSongList();
+            } catch (error) {
+                console.error('加载歌单失败:', error);
+                document.getElementById('songList').innerHTML = '<div class="no-result">歌单加载失败，请刷新页面重试</div>';
+            }
+        }
+
+        // 渲染滚动抽取机
+        function renderWheel() {
+            const slotSongs = document.getElementById('slotSongs');
+            slotSongs.innerHTML = '';
+            
+            if (currentSongs.length === 0) return;
+            
+            // 创建重复的歌曲列表用于滚动效果（至少3倍长度）
+            const repeatCount = Math.max(3, Math.ceil(30 / currentSongs.length));
+            let displaySongs = [];
+            
+            for (let i = 0; i < repeatCount; i++) {
+                displaySongs = displaySongs.concat(shuffleArray([...currentSongs]));
+            }
+            
+            // 生成歌曲元素
+            displaySongs.forEach((song, index) => {
+                const item = document.createElement('div');
+                item.className = 'slot-item';
+                item.textContent = song.name;
+                item.dataset.songName = song.name;
+                item.dataset.language = song.language;
+                slotSongs.appendChild(item);
+            });
+        }
+
+        // 数组随机排序
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        // 页面加载动画
+        window.addEventListener('load', function() {
+            loadSongs();
+            
+            setTimeout(function() {
+                document.querySelector('.loader').style.opacity = '0';
+                setTimeout(function() {
+                    document.querySelector('.loader').style.display = 'none';
+                    document.querySelector('.container').classList.add('show');
+                }, 500);
+            }, 800);
+        });
+
+        // 分类选择
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                currentCategory = this.dataset.category;
+                if (currentCategory === 'all') {
+                    currentSongs = [...allSongs];
+                } else {
+                    currentSongs = allSongs.filter(s => s.language === currentCategory);
+                }
+                
+                renderWheel();
+                renderSongList();
+            });
+        });
+
+        // 渲染歌单列表
+        const songListEl = document.getElementById('songList');
+        const searchInput = document.getElementById('searchInput');
+        const noResult = document.getElementById('noResult');
+        
+        function renderSongList(filter = '') {
+            if (currentSongs.length === 0) {
+                songListEl.innerHTML = '';
+                noResult.textContent = '该分类下暂无歌曲';
+                noResult.style.display = 'block';
+                return;
+            }
+            
+            songListEl.innerHTML = '';
+            const filteredSongs = currentSongs.filter(song => 
+                song.name.toLowerCase().includes(filter.toLowerCase())
+            );
+            
+            if (filteredSongs.length === 0) {
+                noResult.textContent = '未找到匹配的歌曲';
+                noResult.style.display = 'block';
+            } else {
+                noResult.style.display = 'none';
+                filteredSongs.forEach((song, index) => {
+                    const item = document.createElement('div');
+                    item.className = 'song-item';
+                    item.dataset.name = song.name;
+                    item.innerHTML = `
+                        <span class="song-number">${String(index + 1).padStart(2, '0')}</span>
+                        <span class="song-name">${song.name}</span>
+                        <span class="song-lang">${song.language}</span>
+                    `;
+                    songListEl.appendChild(item);
+                });
+            }
+        }
+        
+        // 搜索功能
+        searchInput.addEventListener('input', function() {
+            renderSongList(this.value);
+        });
+
+        // 滚动抽取功能
+        const slotSongs = document.getElementById('slotSongs');
+        const spinButton = document.getElementById('spinButton');
+        const resultDisplay = document.getElementById('resultDisplay');
+        let isSpinning = false;
+
+        spinButton.addEventListener('click', function() {
+            if (isSpinning || currentSongs.length === 0) return;
+            
+            isSpinning = true;
+            spinButton.disabled = true;
+            spinButton.textContent = '抽取中...';
+            resultDisplay.textContent = '';
+            resultDisplay.classList.remove('show');
+
+            // 去重：排除上次抽到的歌曲
+            let availableSongs = currentSongs;
+            if (lastSelectedSong && currentSongs.length > 1) {
+                availableSongs = currentSongs.filter(s => s.name !== lastSelectedSong);
+            }
+            
+            // 随机选择歌曲
+            const selectedSong = availableSongs[Math.floor(Math.random() * availableSongs.length)];
+            lastSelectedSong = selectedSong.name;
+            
+            // 获取所有歌曲项
+            const items = slotSongs.querySelectorAll('.slot-item');
+            const itemHeight = 50; // 每个项目的高度
+            
+            // 找到选中歌曲的位置（在最后一组中）
+            let targetIndex = -1;
+            const songsPerSet = items.length / Math.max(3, Math.ceil(30 / currentSongs.length));
+            
+            // 在最后一组中找目标歌曲
+            for (let i = items.length - songsPerSet; i < items.length; i++) {
+                if (items[i].dataset.songName === selectedSong.name) {
+                    targetIndex = i;
+                    break;
+                }
+            }
+            
+            // 如果没找到，随机选一个
+            if (targetIndex === -1) {
+                targetIndex = Math.floor(Math.random() * items.length);
+            }
+            
+            // 计算目标位置（让选中的歌曲停在高亮框中间）
+            // 高亮框在 slot-machine (180px) 中垂直居中，高亮框高度 50px
+            // 需要让歌曲项的中心与高亮框中心对齐
+            const machineHeight = 180;
+            const highlightTop = (machineHeight - 50) / 2; // 65px
+            const targetOffset = (targetIndex * itemHeight) - highlightTop;
+            
+            // 先快速滚动几圈
+            const quickScrollDuration = 1500;
+            slotSongs.style.transition = `transform ${quickScrollDuration}ms cubic-bezier(0.25, 0.1, 0.25, 1)`;
+            slotSongs.style.transform = `translateY(-${targetOffset - 200}px)`;
+            
+            // 然后减速到目标位置
+            setTimeout(() => {
+                slotSongs.style.transition = 'transform 1.5s cubic-bezier(0.17, 0.67, 0.12, 0.99)';
+                slotSongs.style.transform = `translateY(-${targetOffset}px)`;
+                
+                // 动画结束
+                setTimeout(() => {
+                    isSpinning = false;
+                    spinButton.disabled = false;
+                    spinButton.textContent = '再次抽取';
+                    
+                    resultDisplay.innerHTML = `🎵 推荐：<span class="highlight">${selectedSong.name}</span> <span class="lang-tag">${selectedSong.language}</span>`;
+                    resultDisplay.classList.add('show');
+                    
+                    // 高亮对应歌曲
+                    document.querySelectorAll('.song-item').forEach(item => {
+                        item.classList.remove('highlighted');
+                        if (item.dataset.name === selectedSong.name) {
+                            item.classList.add('highlighted');
+                            item.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
+                    });
+                    
+                    // 高亮选中的歌曲项
+                    items.forEach((item, idx) => {
+                        item.classList.remove('selected');
+                        if (idx === targetIndex) {
+                            item.classList.add('selected');
+                        }
+                    });
+                }, 1500);
+            }, quickScrollDuration);
+        });
+    </script>
+</body>
+</html>

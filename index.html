@@ -3,15 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mommy and the Queen: Isoth</title>
+    <title>伊索斯的永恒梦境 | Isoth</title>
+    <meta name="description" content="百日只是开始，永恒才是承诺。欢迎来到伊索斯的梦境空间，聆听那些缠绕于梦境的旋律。">
     <link rel="icon" href="head-Photoroom.png">
     <link rel="stylesheet" href="style.css?v=1.1.20">
 </head>
 <body>
+    <!-- 开屏欢迎弹窗 -->
+    <div class="welcome-modal" id="welcomeModal">
+        <div class="welcome-content">
+            <h2 class="welcome-title">欢迎归来</h2>
+            <p class="welcome-text">百日只是开始，永恒才是承诺<br>梦境之主的触手，永远缠绕着驻留的心</p>
+            <div class="welcome-buttons">
+                <a href="playlist/" class="welcome-btn primary">进入歌单</a>
+                <button class="welcome-btn secondary" onclick="closeWelcome()">直接进入</button>
+            </div>
+            <button class="welcome-close" onclick="closeWelcome()">&times;</button>
+        </div>
+    </div>
+
     <!-- 加载动画 -->
     <div class="loader">
         <div class="loader-inner"></div>
     </div>
+
+    <div class="page-wrapper">
+        <div class="main-content">
     
     <!-- 导航按钮 -->
     <div class="nav-buttons">
@@ -23,8 +40,11 @@
     <!-- 背景图片 -->
     <div class="background"></div>
     
-    <!-- 相册按钮 -->
-    <button id="albumButton" class="album-button">纪念照</button>
+    <!-- 相册和音乐按钮组 -->
+    <div class="top-controls">
+        <button id="albumButton" class="album-button">纪念照</button>
+        <button onclick="toggleMusic()" class="music-icon">🎵</button>
+    </div>
     
     <!-- 相册弹窗 -->
     <div id="albumModal" class="album-modal">
@@ -59,15 +79,21 @@
                 <source src="Havana.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放
             </audio>
-            <button onclick="toggleMusic()" class="music-icon">🎵</button>
             <div id="boat" class="boat">⛵</div>
             <button id="octopusSound" class="octopus-sound-button" style="display:none;">梦之乐章</button>
         </div>
+        
+        <!-- 歌单入口 -->
+        <a href="playlist/" class="playlist-entry">
+            <span class="playlist-entry-icon">🎶</span>
+            <span class="playlist-entry-text">梦境留声机</span>
+            <span class="playlist-entry-hint">收录了那些缠绕于梦境的旋律</span>
+        </a>
     </div>
     
     <!-- 海底梦境文字 -->
     <div class="dream-text">
-        <p>盘旋于梦境不愿离去的触须，紧紧地缠绕于访客脖颈的梦境之主，并不打算让客人安然而归...</p>
+        <p>盘旋于梦境不愿离去的触手，紧紧地缠绕于访客脖颈的梦境之主，并不打算让客人安然而归...</p>
     </div>
 
     <script>
@@ -84,6 +110,7 @@
                     document.querySelector('.music-control button').classList.add('show');
                     document.querySelector('.album-button').classList.add('show');
                     document.querySelector('.album-button').style.opacity = '1';
+                    document.querySelector('.top-controls .music-icon').classList.add('show');
                 }, 500);
             }, 1000);
         });
@@ -253,13 +280,39 @@
         // 页面加载和窗口大小变化时执行
         window.addEventListener('load', adjustFontSize);
         window.addEventListener('resize', adjustFontSize);
+        
+        // 开屏弹窗控制
+        function closeWelcome() {
+            const modal = document.getElementById('welcomeModal');
+            modal.style.opacity = '0';
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300);
+        }
+        
+        // 检查是否已经访问过（可选：使用 localStorage 记住选择）
+        window.addEventListener('load', function() {
+            // 如果希望只显示一次，可以取消下面的注释
+            // if (localStorage.getItem('visited')) {
+            //     closeWelcome();
+            // }
+        });
     </script>
     
-    <!-- 版权信息 -->
-    <div class="copyright">
-        最终解释权归Isoth所有<br>
-        感谢钓钓的大力支持<br>
-        Mr.M
-    </div>
+        </div><!-- .main-content -->
+        
+        <!-- 版权信息 -->
+        <div class="copyright">
+            <div class="copyright-main">
+                © 2025-2026 Isoth · 最终解释权归伊索斯isoth所有
+            </div>
+            <div class="copyright-credits">
+                忠犬队 | Mr.M 敬上
+            </div>
+            <div class="copyright-icp">
+                <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">鄂ICP备2026018261号</a>
+            </div>
+        </div>
+    </div><!-- .page-wrapper -->
 </body>
 </html>
